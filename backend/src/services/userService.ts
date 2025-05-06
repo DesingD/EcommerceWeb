@@ -54,7 +54,7 @@ export const aggUsers = (data: Customer): Promise<Customer> => {
 
 export const deleteUser = (id: string): Promise<Customer> => {
     return new Promise((resolve, reject) => {
-        pool.query('DELETE FROM customers WHERE id = $1', [id], (error, results) => {
+        pool.query('DELETE FROM customers WHERE id = $1 RETURNING *', [id], (error, results) => {
             if (error) {
                 reject(error)
             } else {

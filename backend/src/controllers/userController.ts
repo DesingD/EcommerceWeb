@@ -76,9 +76,13 @@ export const editedUser = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "No data provided" });
   }
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password_hash, salt);
-  req.body.password_hash = hashedPassword;
+  if (req.body.password_hash) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password_hash, salt);
+    req.body.password_hash = hashedPassword;
+  }
+
+  
 
   const data = req.body;
   try {
