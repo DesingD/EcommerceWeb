@@ -1,4 +1,4 @@
-import { response, Router } from 'express';
+import { Router } from 'express';
 import { getAllUsers, aggUser, deletedUser, editedUser, getUserByIdC } from '../controllers/userController';
 
 const router = Router();
