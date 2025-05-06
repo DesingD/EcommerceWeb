@@ -67,6 +67,7 @@ export const deleteUser = (id: string): Promise<Customer> => {
 export const editUser = (id: string, data: Partial<Customer>): Promise<Customer> => {
     return new Promise((resolve, reject) => {
         // Construir dinámicamente las columnas y valores
+        // Verificar que el objeto data no esté vacío
         const keys = Object.keys(data);
         const values = Object.values(data);
 

@@ -72,6 +72,10 @@ export const deletedUser = async (req: Request, res: Response) => {
 export const editedUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
+  if (!req.body){
+    return res.status(400).json({ message: "No data provided" });
+  }
+
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password_hash, salt);
   req.body.password_hash = hashedPassword;
