@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getAllUsers, aggUser, deletedUser, editedUser, getUserByIdC } from '../controllers/userController';
+import { validateEmailMiddleware } from '../middlewares/validateEmail';
 
 const router = Router();
 

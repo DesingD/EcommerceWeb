@@ -2,6 +2,7 @@ import { getUsers, aggUsers, deleteUser, editUser, getUserById, getUserByEmail }
 import { Request, Response } from "express";
 import {v4 as uuidv4} from "uuid";
 import bcrypt from "bcrypt";
+import { isValidEmail } from "../utils/emailValidate";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -31,14 +32,21 @@ export const getUserByIdC = async (req: Request, res: Response) => {
 }
 
 export const aggUser = async (req: Request, res: Response) => {
+  const {email} = req.body;
+  // verify email valid
+  if (!isValidEmail(email)) {
+    return res.status(400).json({ message: "Invalid email format" });
+  }
 
   //  Verify email unique
-  const { email } = req.body;
+  
   const existingUser = await getUserByEmail(email);
 
   if (existingUser) {
     return res.status(409).json({ message: "Email already exists" });
   }
+
+  
 
   let newId = uuidv4();
   req.body.id = newId;
@@ -85,6 +93,11 @@ export const editedUser = async (req: Request, res: Response) => {
   
 
   const data = req.body;
+
+  if (!isValidEmail(data.email)) {
+    return res.status(400).json({ message: "Invalid email format" });
+  }
+
   try {
     const customer = await editUser(id, data); 
     res.status(200).json({ message: "User edited successfully", customer });
