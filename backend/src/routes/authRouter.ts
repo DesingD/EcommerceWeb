@@ -1,6 +1,4 @@
 import { Router } from 'express'
-import { ExpressAuth } from '@auth/express'
-import GitHub from "@auth/express/providers/github"
 import { loginController, registerController, forgotPasswordController, resetPassController } from '../controllers/authController'
 import { validateToken } from '../middlewares/validateToken'
 

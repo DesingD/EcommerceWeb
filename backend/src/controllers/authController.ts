@@ -106,8 +106,8 @@ export const forgotPasswordController = async (req: Request, res: Response) => {
 
     // Generate a unique token for password reset
     const resetToken = generateToken(user.id, { action: 'reset_password', code: code }, exp); // Implement your token generation logic here
-
-    const html = forgotPasswordHtml(user.name, `http://example.com/reset-password?token=${resetToken}`);
+    const resetPasswordUrl = process.env.RESET_PASSWORD_URL || 'http://example.com/reset-password';
+    const html = forgotPasswordHtml(user.name, `${resetPasswordUrl}?token=${resetToken}`);
 
     const resSend = await sendMail(email, 'Password Reset', `Hola, ${user.name}. Usa este enlace para restablecer tu contraseña: ${resetToken}`, html);
     if (resSend !== 202) {
