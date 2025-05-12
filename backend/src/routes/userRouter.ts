@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllUsers, aggUser, deletedUser, editedUser, getUserByIdC } from '../controllers/userController';
+import { getAllUsers,  deletedUser, editedUser, getUserByIdC } from '../controllers/userController';
 import { validateEmailMiddleware } from '../middlewares/validateEmail';
 
 const router = Router();
@@ -11,9 +11,6 @@ router.get('/:id', (req, res) => {
     getUserByIdC(req, res);
 });
 
-router.post('/agg', (req, res) => {
-    aggUser(req, res);
-}); 
 
 router.delete('/:id', (req, res) => {
     deletedUser(req, res);

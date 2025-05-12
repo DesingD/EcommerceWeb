@@ -12,7 +12,10 @@ app.use(cors());
 
 // Import routes
 import userRouter from './routes/userRouter';
+import authRouter from './routes/authRouter';
 app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
