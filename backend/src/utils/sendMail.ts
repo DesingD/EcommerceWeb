@@ -14,17 +14,16 @@ export const sendMail = async (to: string, subject: string, text: string, html:s
       }
       let statusCode = 404;
       
-      await sendGrid
-        .send(msg)
-        .then((response) => {
-          statusCode = response[0].statusCode;
-        })
-        .catch((error) =>{
-          const err = {
-            message: error.message
-          }
-          return err;
-        })
-
+      try {
+        const response = await sendGrid.send(msg);
+        statusCode = response[0].statusCode;
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error("Error sending email:", error.message);
+        } else {
+          console.error("Error sending email:", error);
+        }
+        statusCode = 500; // Internal Server Error
+      }
       return statusCode;
 }

@@ -6,6 +6,7 @@ import { isValidEmail } from '../utils/emailValidate';
 import {v4 as uuidv4} from "uuid";
 import { sendMail } from '../utils/sendMail'; // Assuming you have a utility function to send emails
 import {forgotPasswordHtml} from '../utils/templatesMails/forgotMail';
+import {generateSixDigitCode} from '../utils/generateCode';
 
 export const loginController = async (req: Request, res: Response) => {
     const { email, password } = req.body;
@@ -101,8 +102,10 @@ export const forgotPasswordController = async (req: Request, res: Response) => {
 
     const exp = 60 * 15; // 15 min
 
+    const code = generateSixDigitCode();
+
     // Generate a unique token for password reset
-    const resetToken = generateToken(user.id, { action: 'reset_password', code: 1234 }, exp); // Implement your token generation logic here
+    const resetToken = generateToken(user.id, { action: 'reset_password', code: code }, exp); // Implement your token generation logic here
 
     const html = forgotPasswordHtml(user.name, `http://example.com/reset-password?token=${resetToken}`);
 
