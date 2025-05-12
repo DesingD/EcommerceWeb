@@ -110,7 +110,11 @@ export const forgotPasswordController = async (req: Request, res: Response) => {
     const html = forgotPasswordHtml(user.name, `http://example.com/reset-password?token=${resetToken}`);
 
     const resSend = await sendMail(email, 'Password Reset', `Hola, ${user.name}. Usa este enlace para restablecer tu contraseña: ${resetToken}`, html);
-    console.log(resSend);
+    if (resSend !== 202) {
+        return res.status(500).json({
+            message: 'Error sending email',
+        });
+    }
     
     res.status(200).json({
         message: 'Password reset link sent to your email',

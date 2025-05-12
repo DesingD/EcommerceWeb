@@ -12,7 +12,7 @@ export const sendMail = async (to: string, subject: string, text: string, html:s
         text: text,
         html: html,
       }
-      let statusCode = 404;
+      let statusCode = 0;
       
       try {
         const response = await sendGrid.send(msg);
