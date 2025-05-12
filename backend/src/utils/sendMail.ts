@@ -20,7 +20,12 @@ export const sendMail = async (to: string, subject: string, text: string, html:s
           statusCode = response[0].statusCode;
         })
         .catch((error) =>{
-          return error
+          const err = {
+            message: error.message,
+            code: error.code,
+            response: error.response,
+          }
+          return err;
         })
 
       return statusCode;

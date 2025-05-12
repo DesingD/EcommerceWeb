@@ -22,7 +22,6 @@ export const validateToken = (req:Request, res:Response, next:NextFunction):void
     } catch (error) {
         res.status(401).json({
             message: "Invalid token",
-            data: error,
         });
     }
 }
