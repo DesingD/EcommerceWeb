@@ -13,8 +13,10 @@ app.use(cors());
 // Import routes
 import userRouter from './routes/userRouter';
 import authRouter from './routes/authRouter';
+import productRouter from './routes/productRouter';
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/products', productRouter);
 
 
 app.get('/', (req, res) => {
