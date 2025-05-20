@@ -10,7 +10,7 @@ router.get('/:id', (req, res) => {
     getProductByIdP(req, res);
 });
 
-router.post('/agg', (req, res) => {
+router.post('/add', (req, res) => {
     aggProduct(req, res)
 })
 
