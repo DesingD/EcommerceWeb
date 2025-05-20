@@ -56,6 +56,11 @@ export const editProduct = (id: string, data: Partial<Product>): Promise<Product
     return new Promise((resolve, reject) => {
         // Construir dinámicamente las columnas y valores
         // Verificar que el objeto data no esté vacío
+        if (Object.keys(data).length === 0) {
+            return reject(new Error("No fields provided to update."));
+        }
+
+
         const keys = Object.keys(data);
         const values = Object.values(data);
 
