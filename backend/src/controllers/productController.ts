@@ -46,8 +46,8 @@ export const aggProduct = async (req: Request, res: Response) => {
 export const deletedProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const customer = await deleteProduct(id); 
-    res.status(200).json({ message: "User deleted successfully", customer });
+    const product = await deleteProduct(id); 
+    res.status(200).json({ message: "Product deleted successfully", product });
   } catch (error) {
     res.status(500).json({ message: "Error deleting product", error });
   }
@@ -63,8 +63,8 @@ export const editedProduct = async (req: Request, res: Response) => {
   const data = req.body;
 
   try {
-    const customer = await editProduct(id, data); 
-    res.status(200).json({ message: "User edited successfully", customer });
+    const product = await editProduct(id, data); 
+    res.status(200).json({ message: "Product edited successfully", product });
   } catch (error) {
     res.status(500).json({ message: "Error editing product", error });
   }
