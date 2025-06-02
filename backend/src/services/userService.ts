@@ -3,7 +3,7 @@ import { Customer } from '../types/Customers'
 
 export const getUsers = (limit:number, offset: number): Promise<Customer[]> => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM customers ORDER BY id LIMIT $1 OFFSET $2',[limit, offset] ,(error, results) => {
+        pool.query('SELECT * FROM customers  ORDER BY id LIMIT $1 OFFSET $2',[limit, offset] ,(error, results) => {
             if (error) {
                 reject(error)
             } else {
@@ -15,7 +15,7 @@ export const getUsers = (limit:number, offset: number): Promise<Customer[]> => {
 
 export const getUserById = (id: string): Promise<Customer> => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM customers WHERE id = $1', [id], (error, results) => {
+        pool.query('SELECT customers.id, customers.name, customers.email, customers.phone, rols.id as rolid, rols.name as rolname FROM customers JOIN rols ON customers.rol = rols.id WHERE customers.id = $1', [id], (error, results) => {
             if (error) {
                 reject(error)
             } else {
@@ -27,7 +27,7 @@ export const getUserById = (id: string): Promise<Customer> => {
 
 export const getUserByEmail= (email: string): Promise<Customer> => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM customers WHERE email = $1', [email], (error, results) => {
+        pool.query('SELECT customers.id, customers.name, customers.email, customers.password_hash, customers.phone, rols.id as rolid, rols.name as rolname FROM customers JOIN rols ON customers.rol = rols.id WHERE customers.email = $1', [email], (error, results) => {
             if (error) {
                 reject(error)
             } else {

@@ -5,5 +5,6 @@ export interface Customer {
     email: string;
     password_hash: string;
     phone: string;
+    rolname: string;
     
 }
