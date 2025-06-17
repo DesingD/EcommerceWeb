@@ -1,6 +1,7 @@
 import { getProducts, addProduct, deleteProduct, editProduct, getProductById } from "../services/productService";
 import { Request, Response } from "express";
 import {v4 as uuidv4} from "uuid";
+import { uploadImageToSupabase } from "../utils/uploadImageToSupabase";
 
 export const getAllProduct = async (req: Request, res: Response) => {
   try {
@@ -34,6 +35,16 @@ export const aggProduct = async (req: Request, res: Response) => {
   req.body.id = newId;
 
   const data = req.body;
+  const file = req.file;
+  if (!data || !file) {
+    return res.status(400).json({ message: "No data or file provided" });
+  }
+
+  const imageUrl = file ? await uploadImageToSupabase(file) : null;
+  data.image_url = imageUrl;
+
+  console.log(data.image_url)
+  
 
   try {
     const product = await addProduct(data); 
