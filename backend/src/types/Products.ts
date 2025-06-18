@@ -5,4 +5,5 @@ export interface Product  {
     price: number;
     stock: number;
     is_active: boolean;
+    image_url: string;
 }

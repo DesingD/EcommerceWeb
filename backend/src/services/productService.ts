@@ -28,7 +28,7 @@ export const getProductById = (id: string): Promise<Product> => {
 export const addProduct = (data: Product): Promise<Product> => {
     return new Promise((resolve, reject) => {
         pool.query(
-            'INSERT INTO products (id, name, description, price, stock, is_active) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',[data.id, data.name, data.description, data.price, data.stock, data.is_active],
+            'INSERT INTO products (id, name, description, price, stock, is_active, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',[data.id, data.name, data.description, data.price, data.stock, data.is_active, data.image_url],
             (error, results) => {
             if (error) {
                 reject(error)
