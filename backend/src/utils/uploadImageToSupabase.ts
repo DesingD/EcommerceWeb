@@ -17,7 +17,7 @@ export async function uploadImageToSupabase(file: Express.Multer.File, bucket = 
 
   if (error) throw new Error(`Error al subir imagen: ${error.message}`)
 
-  const  {data} = await supabase.storage.from(bucket).createSignedUrl(fileName, 60 * 60 * 60 * 24 * 365) // URL válida por 1 año
-  console.log(data)
+  const  {data} = await supabase.storage.from(bucket).createSignedUrl(fileName, 60 * 60 * 24 * 365) // URL válida por 1 año
+  
   return data?.signedUrl || null
 }
