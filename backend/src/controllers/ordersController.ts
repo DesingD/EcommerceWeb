@@ -1,11 +1,38 @@
 import { Request, Response } from "express";
-import { getOrders, addOrder, addOrderItem } from "../services/ordesService";
+import { getOrders,getOrdersById, addOrder, addOrderItem, getOrderItems } from "../services/ordesService";
 import { v4 as uuidV4 } from "uuid";
 
 export const getOrdersController = async (req: Request, res:Response) => {
   try {
     const orders = await getOrders();
-    return res.status(200).json(orders);
+    const ordersWithItems = await Promise.all(orders.map(async (order) => {
+      const orderItems = await getOrderItems(order.id);
+      return {
+        ...order,
+        items: orderItems
+      };
+    }));
+    
+    return res.status(200).json(ordersWithItems);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+export const getOrdersByIdController = async (req: Request, res:Response) => {
+  try {
+    const{ id }= req.params
+    const orders = await getOrdersById(id);
+    const ordersWithItems = await Promise.all(orders.map(async (order) => {
+      const orderItems = await getOrderItems(order.id);
+      return {
+        ...order,
+        items: orderItems
+      };
+    }));
+    
+    return res.status(200).json(ordersWithItems);
   } catch (error) {
     console.error("Error fetching orders:", error);
     return res.status(500).json({ error: "Internal server error" });

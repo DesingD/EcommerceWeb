@@ -4,4 +4,5 @@ export interface Order {
     address_id: string;
     status: string;
     total_amount: number;
+    
 }
