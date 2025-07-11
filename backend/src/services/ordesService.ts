@@ -1,12 +1,22 @@
 import pool from '../config/connectPG'
 import { Order } from '../types/orders'
 import { OrderItem } from '../types/orderItems'
-import { Address } from '../types/Addresses'
 
 export const getOrders = async (): Promise<Order[]> => {
   const query = 'SELECT orders.id, orders.status, orders.total_amount, orders.created_at, customers.id as idCustomers, customers.name as name, customers.email as email, customers.phone as phone, addresses.id as idAddress, addresses.street as street, addresses.city as city, addresses.state as state, addresses.zip_code as zipCode, addresses.country as country FROM public.orders JOIN customers ON customers.id  = orders.customer_id JOIN addresses ON addresses.id = orders.address_id;'
   const { rows } = await pool.query(query, [])
   return rows as Order[]
+}
+
+export const getOrdersById = async (idCustomers: string): Promise<Order[]> => {
+  const query = 'SELECT orders.id, orders.status, orders.total_amount, orders.created_at, customers.id as idCustomers, customers.name as name, customers.email as email, customers.phone as phone, addresses.id as idAddress, addresses.street as street, addresses.city as city, addresses.state as state, addresses.zip_code as zipCode, addresses.country as country FROM public.orders JOIN customers ON customers.id  = orders.customer_id JOIN addresses ON addresses.id = orders.address_id where orders.customer_id = $1;'
+  const { rows } = await pool.query(query, [idCustomers])
+  return rows as Order[]
+}
+export const getOrderItems = async (idOrder: string): Promise<OrderItem[]> => {
+  const query = 'SELECT public.order_items.id, public.order_items.order_id, public.order_items.product_id, public.order_items.quantity, public.order_items.price, products.name, products.description, products.price, products.image_url FROM public.order_items JOIN products ON products.id  = public.order_items.product_id where order_id = $1'
+  const {rows} = await pool.query(query, [idOrder])
+  return rows as OrderItem[];
 }
 
 export const addOrder = async (order: Order): Promise<Order> => {
