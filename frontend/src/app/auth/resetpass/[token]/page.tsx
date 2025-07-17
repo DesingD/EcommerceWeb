@@ -1,11 +1,12 @@
 "use client";
-
-import ForgotForm from "@/components/auth/ForgotForm";
-import React from "react";
+import { useParams } from 'next/navigation';
 import Image from "next/image";
+import ResetPassForm from "@/components/auth/ResetPassForm";
 
-export default function ProductsPage() {
-  return (
+export default function ProductPage() {
+  const params = useParams();
+  // params.id contiene el valor dinámico
+  return(
     <div className="w-[90vw] h-[100vh] grid grid-cols-2">
       <div className="">
         <Image
@@ -29,10 +30,10 @@ export default function ProductsPage() {
             <span>Back</span>
           </button>
         </div>
-        <h2 className="font-bold text-5xl select-none">Forgot Password​</h2>          
-        <p className="text-[#a4a1aa] mb-8 mt-5 select-none max-w-[450px]">Enter your registered email address. we’ll send you a code to reset your password.</p>
+        <h2 className="font-bold text-5xl select-none">Change Password​</h2>          
+        <p className="text-[#a4a1aa] mb-8 mt-5 select-none max-w-[450px]">Enter your new password to change your account password.</p>
           {/* Contenido de la página */}
-          <ForgotForm/>
+          <ResetPassForm/>
       </div>
     </div>
   );
